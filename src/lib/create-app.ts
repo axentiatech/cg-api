@@ -11,9 +11,9 @@ export function createRouter() {
 
 export default function createApp() {
   const app = createRouter()
+    .use(logger())
+    .use(serveEmojiFavicon("🎓"))
     .basePath("/api")
-    .use("*", logger())
-    .use("*", serveEmojiFavicon("🎓"))
     .notFound(notFound)
     .onError(onError)
     .route("/", indexRoute);
