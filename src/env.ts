@@ -5,6 +5,7 @@ const EnvSchema = z.object({
   PORT: z.coerce.number().default(3000),
   LOG_LEVEL: z.enum(["trace", "debug", "info", "warn", "error", "fatal"]),
   NODE_ENV: z.enum(["development", "production"]),
+  OPENAI_API_KEY: z.string(),
 });
 
 export type Env = z.infer<typeof EnvSchema>;
