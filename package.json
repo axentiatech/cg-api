@@ -1,0 +1,22 @@
+{
+  "name": "cg-api",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "tsx watch src/index.ts"
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.13.2",
+    "@hono/zod-openapi": "^0.16.4",
+    "dotenv": "^16.4.5",
+    "hono": "^4.6.3",
+    "hono-pino": "^0.3.0",
+    "pino": "^9.4.0",
+    "pino-pretty": "^11.2.2",
+    "stoker": "^1.0.9",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.17",
+    "tsx": "^4.7.1"
+  }
+}
