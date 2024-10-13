@@ -6,6 +6,8 @@ const EnvSchema = z.object({
   LOG_LEVEL: z.enum(["trace", "debug", "info", "warn", "error", "fatal"]),
   NODE_ENV: z.enum(["development", "production"]),
   OPENAI_API_KEY: z.string(),
+  UPSTASH_VECTOR_URL: z.string(),
+  UPSTASH_VECTOR_TOKEN: z.string(),
 });
 
 export type Env = z.infer<typeof EnvSchema>;

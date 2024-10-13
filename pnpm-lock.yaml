@@ -5,12 +5,18 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@ai-sdk/openai':
+    specifier: ^0.0.66
+    version: 0.0.66(zod@3.23.8)
   '@hono/node-server':
     specifier: ^1.13.2
     version: 1.13.2(hono@4.6.3)
   '@hono/zod-openapi':
     specifier: ^0.16.4
     version: 0.16.4(hono@4.6.3)(zod@3.23.8)
+  '@upstash/vector':
+    specifier: ^1.1.7
+    version: 1.1.7
   ai:
     specifier: ^3.4.9
     version: 3.4.9(react@18.3.1)(svelte@4.2.19)(vue@3.5.11)(zod@3.23.8)
@@ -45,6 +51,17 @@ devDependencies:
     version: 4.7.1
 
 packages:
+
+  /@ai-sdk/openai@0.0.66(zod@3.23.8):
+    resolution: {integrity: sha512-V4XeDnlNl5/AY3GB3ozJUjqnBLU5pK3DacKTbCNH3zH8/MggJoH6B8wRGdLUPVFMcsMz60mtvh4DC9JsIVFrKw==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      zod: ^3.0.0
+    dependencies:
+      '@ai-sdk/provider': 0.0.24
+      '@ai-sdk/provider-utils': 1.0.20(zod@3.23.8)
+      zod: 3.23.8
+    dev: false
 
   /@ai-sdk/provider-utils@1.0.20(zod@3.23.8):
     resolution: {integrity: sha512-ngg/RGpnA00eNOWEtXHenpX1MsM2QshQh4QJFjUfwcqHpM5kTfG7je7Rc3HcEDP+OkRVv2GF+X4fC1Vfcnl8Ow==}
@@ -485,6 +502,10 @@ packages:
     dependencies:
       undici-types: 5.26.5
     dev: true
+
+  /@upstash/vector@1.1.7:
+    resolution: {integrity: sha512-yxgXdH/Z2uX8XUVrLeo6ZNci2Z8EzXGwjIZ8EZwctF5+oiBIKwz8tsh/yUesyGrbuQ+ViBPGtZWV5vLFbp649w==}
+    dev: false
 
   /@vue/compiler-core@3.5.11:
     resolution: {integrity: sha512-PwAdxs7/9Hc3ieBO12tXzmTD+Ln4qhT/56S+8DvrrZ4kLDn4Z/AMUr8tXJD0axiJBS0RKIoNaR0yMuQB9v9Udg==}
