@@ -1,8 +1,11 @@
 {
   "name": "cg-api",
   "version": "1.0.0",
+  "type": "module",
   "scripts": {
-    "dev": "tsx watch src/index.ts"
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc && tsc-alias",
+    "start": "node dist/index.js"
   },
   "dependencies": {
     "@ai-sdk/openai": "^0.0.66",
@@ -16,6 +19,7 @@
     "pino": "^9.4.0",
     "pino-pretty": "^11.2.2",
     "stoker": "^1.0.9",
+    "tsc-alias": "^1.8.10",
     "zod": "^3.23.8"
   },
   "devDependencies": {
