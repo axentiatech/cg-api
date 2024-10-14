@@ -38,8 +38,6 @@ export async function getMatchesFromEmbeddings(
       includeMetadata: true,
     });
 
-    console.log(queryResult);
-
     return queryResult;
   } catch (e) {
     // Log the error and throw it

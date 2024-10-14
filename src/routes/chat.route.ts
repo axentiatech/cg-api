@@ -8,7 +8,7 @@ import { getContext } from "@/lib/vector";
 
 const chatSchema = z.object({
   messages: z.custom<CoreMessage[]>(),
-  namespace: z.string().default("udel"),
+  namespace: z.string().default("gennexteducation"),
 });
 
 const chatRoute = createRouter();
@@ -50,15 +50,16 @@ chatRoute.post("/", validatorMiddleware(), async (c) => {
             let docs: string[] = [];
 
             context.forEach((match) => {
-              resource.add((match.metadata as { file_name: string }).file_name);
+              resource.add((match.metadata as { source: string }).source);
 
-              docs.push((match.metadata as any).text);
+              docs.push((match.metadata as any)._pageContentLC);
             });
 
             const contextText = docs.join("\n").substring(0, 3000);
 
             const data = `
-            You are a helpful assistant. Use the following context to answer the user's question. If the context doesn't contain relevant information, use your general knowledge but mention that the answer is not based on the given context. Context: ${contextText}. Answer the user's question based on this context.
+            You are a helpful assistant. Use the following context to answer the user's question. If the context doesn't contain relevant information, use your general knowledge but mention that the answer is not based on the given context. Context: ${contextText}. Answer the user's question based on this context and also mention the resources used to answer the question.
+            Resources: ${Array.from(resource)[0]}
   
             `;
 
