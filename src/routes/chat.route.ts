@@ -8,7 +8,7 @@ import { getContext } from "@/lib/vector";
 
 const chatSchema = z.object({
   messages: z.custom<CoreMessage[]>(),
-  namespace: z.string().default("gennexteducation"),
+  university: z.enum(["udel", "olemiss", "nafsa"]).default("udel"),
 });
 
 const chatRoute = createRouter();
@@ -25,7 +25,7 @@ function validatorMiddleware() {
 }
 
 chatRoute.post("/", validatorMiddleware(), async (c) => {
-  const { messages, namespace } = c.req.valid("json");
+  const { messages, university } = c.req.valid("json");
 
   return honoStream(c, async (stream) => {
     const result = await streamText({
@@ -42,7 +42,7 @@ chatRoute.post("/", validatorMiddleware(), async (c) => {
               .describe("The query to search the vector database"),
           }),
           execute: async ({ query }) => {
-            const context = await getContext(query, namespace, 3000, 0.7);
+            const context = await getContext(query, university, 3000, 0.7);
 
             //DO SOMETHING WITH RESOURCE
             let resource = new Set<string>();
