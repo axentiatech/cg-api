@@ -8,7 +8,9 @@ import { getContext } from "@/lib/vector";
 
 const chatSchema = z.object({
   messages: z.custom<CoreMessage[]>(),
-  university: z.enum(["udel", "olemiss", "nafsa"]).default("udel"),
+  university: z
+    .enum(["udel", "olemiss", "nafsa", "gennexteducation"])
+    .default("udel"),
 });
 
 const chatRoute = createRouter();
