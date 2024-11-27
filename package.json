@@ -4,8 +4,12 @@
   "type": "module",
   "scripts": {
     "dev": "tsx watch src/index.ts",
+    "start": "node dist/index.js",
+    "dev:wrangler": "wrangler dev src/index.ts",
+    "dev:esbuild": "esbuild --bundle src/server.ts --format=esm --watch --outfile=dist/_worker.js",
+    "build:wrangler": "esbuild --bundle src/server.ts --format=esm --outfile=dist/_worker.js",
     "build": "tsc && tsc-alias",
-    "start": "node dist/index.js"
+    "deploy": "wrangler deploy --minify"
   },
   "dependencies": {
     "@ai-sdk/openai": "^0.0.66",
@@ -23,7 +27,9 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@cloudflare/workers-types": "^4.20241112.0",
     "@types/node": "^20.11.17",
-    "tsx": "^4.7.1"
+    "tsx": "^4.7.1",
+    "wrangler": "^3.91.0"
   }
 }

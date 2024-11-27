@@ -1,7 +1,7 @@
 import { createRouter } from "@/lib/create-app";
 import { streamText as honoStream } from "hono/streaming";
 import { streamText, CoreMessage, tool } from "ai";
-import { openai } from "@ai-sdk/openai";
+import { createOpenAI } from "@ai-sdk/openai";
 import { validator } from "hono/validator";
 import { z } from "zod";
 import { getContext } from "@/lib/vector";
@@ -28,6 +28,9 @@ function validatorMiddleware() {
 
 chatRoute.post("/", validatorMiddleware(), async (c) => {
   const { messages, university } = c.req.valid("json");
+  const openai = createOpenAI({
+    apiKey: c.env.OPENAI_API_KEY,
+  });
 
   return honoStream(c, async (stream) => {
     const result = await streamText({
@@ -46,7 +49,13 @@ chatRoute.post("/", validatorMiddleware(), async (c) => {
               .describe("The query to search the vector database"),
           }),
           execute: async ({ query }) => {
-            const context = await getContext(query, university, 3000, 0.7);
+            const context = await getContext(
+              query,
+              university,
+              3000,
+              0.7,
+              c.env
+            );
 
             //DO SOMETHING WITH RESOURCE
             let resource = new Set<string>();

@@ -1,4 +1,4 @@
-import { z, ZodError } from "zod";
+import { z } from "zod";
 import "dotenv/config";
 
 const EnvSchema = z.object({
@@ -10,17 +10,19 @@ const EnvSchema = z.object({
   UPSTASH_VECTOR_TOKEN: z.string(),
 });
 
-export type Env = z.infer<typeof EnvSchema>;
+export type Environment = z.infer<typeof EnvSchema>;
 
-let env: Env;
+export function parseEnv(data: any) {
+  const { data: env, error } = EnvSchema.safeParse(data);
 
-try {
-  env = EnvSchema.parse(process.env);
-} catch (e) {
-  const error = e as ZodError;
-  console.log("❌ Invalid Env");
-  console.log(error.flatten().fieldErrors);
-  process.exit(1);
+  if (error) {
+    const errMessage = `❌ Invalid Env\n${Object.entries(
+      error.flatten().fieldErrors
+    )
+      .map(([key, value]) => `${key}: ${value}`)
+      .join("|")}`;
+    throw new Error(errMessage);
+  }
+
+  return env;
 }
-
-export default env;
