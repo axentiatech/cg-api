@@ -1,4 +1,4 @@
-import { embed } from "ai";
+import { embed, generateText } from "ai";
 import { openai } from "@ai-sdk/openai";
 import { Index, QueryResult } from "@upstash/vector";
 import env from "@/env";
@@ -12,9 +12,17 @@ const index = new Index({
 
 export async function getEmbeddings(message: string) {
   try {
+    // Use hypothetical document embeddings:
+    const { text: hypotheticalAnswer } = await generateText({
+      // fast model for generating hypothetical answer:
+      model: openai("gpt-4o-mini", { structuredOutputs: true }),
+      system: "Answer the users question:",
+      prompt: message,
+    });
+
     const { embedding } = await embed({
       model: openai.embedding("text-embedding-ada-002"),
-      value: message.replace(/\n/g, " "),
+      value: hypotheticalAnswer,
     });
 
     return embedding as number[];
