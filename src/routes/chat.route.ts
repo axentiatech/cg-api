@@ -102,7 +102,10 @@ chatRoute.post("/", validatorMiddleware(), async (c) => {
   return honoStream(c, async (stream) => {
     const result = await streamText({
       model: openai("gpt-4o-mini"),
-      system: prompt,
+      system:
+        university === "gennexteducation"
+          ? prompt
+          : "You are a helpful assistant that can answer questions, whenever user ask about the university, you could use the getInformation tool to get the information from the vector database",
       messages,
       maxSteps: 5,
       tools: {
