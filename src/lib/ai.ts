@@ -87,8 +87,8 @@ const ragMiddleware: LanguageModelV1Middleware = {
 
     const filteredContext = context.map((data) => ({
       type: "text" as const,
-      text:
-        `
+      text: data.metadata?._pageContentLC
+        ? `
           ---------PAGE CONTENT---------
           ${data.metadata?._pageContentLC}
 
@@ -96,7 +96,8 @@ const ragMiddleware: LanguageModelV1Middleware = {
           --------ADDITIONAL RESOURCES----
           LINK: ${data.metadata?.source}
           TITLE OF THE PAGE : ${data.metadata?.title}      
-      ` ?? "",
+      `
+        : "",
     }));
 
     messages.push({
