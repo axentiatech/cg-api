@@ -5,7 +5,7 @@ import env from "@/env";
 
 type Dict = Record<string, unknown>;
 
-const index = new Index({
+export const index = new Index({
   url: env.UPSTASH_VECTOR_URL,
   token: env.UPSTASH_VECTOR_TOKEN,
 });
