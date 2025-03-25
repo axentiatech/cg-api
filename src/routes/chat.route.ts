@@ -10,7 +10,7 @@ import { getPrompt } from "@/utils";
 const chatSchema = z.object({
   messages: z.custom<CoreMessage[]>(),
   university: z
-    .enum(["udel", "olemiss", "nafsa", "gennexteducation"])
+    .enum(["udel", "olemiss", "nafsa", "gennexteducation", "collegegenie"])
     .default("udel"),
 });
 
@@ -32,6 +32,21 @@ function validatorMiddleware() {
 chatRoute.post("/", validatorMiddleware(), async (c) => {
   const { messages, university } = c.req.valid("json");
   const prompt = getPrompt(university);
+
+  if (university === "collegegenie") {
+    return honoStream(c, async (stream) => {
+      const result = await streamText({
+        model: openai("gpt-4o"),
+        system: prompt,
+        messages,
+      });
+
+      c.header("X-Vercel-AI-Data-Stream", "v1");
+      c.header("Content-Type", "text/plain; charset=utf-8");
+
+      await stream.pipe(result.toDataStream());
+    });
+  }
   return honoStream(c, async (stream) => {
     const result = await streamText({
       model: openai("gpt-4o-mini"),
