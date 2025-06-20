@@ -11,7 +11,7 @@ const chatSchema = z.object({
   messages: z.custom<CoreMessage[]>(),
   university: z
     .enum(["udel", "olemiss", "nafsa", "gennexteducation", "collegegenie"])
-    .default("udel"),
+    .default("collegegenie"),
 });
 
 export type ChatSchema = z.infer<typeof chatSchema>;
